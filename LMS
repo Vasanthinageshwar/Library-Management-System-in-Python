@@ -1,0 +1,76 @@
+class Book:
+    def __init__(self, title, author, isbn):
+        self.title = title
+        self.author = author
+        self.isbn = isbn
+
+class Library:
+    def __init__(self):
+        self.books = []
+
+    def add_book(self, book):
+        self.books.append(book)
+        print(f"Book '{book.title}' has been added to the library.")
+
+    def remove_book(self, book):
+        self.books.remove(book)
+        print(f"Book '{book.title}' has been removed from the library.")
+
+    def search_book(self, title):
+        for book in self.books:
+            if book.title == title:
+                return book
+        return None
+
+    def display_books(self):
+        if not self.books:
+            print("The library is currently empty.")
+        else:
+            print("List of books in the library:")
+            for book in self.books:
+                print(f" - '{book.title}' by {book.author} (ISBN: {book.isbn})")
+
+if __name__ == '__main__':
+    library = Library()
+
+    while True:
+        print("Enter 1 to add a book")
+        print("Enter 2 to remove a book")
+        print("Enter 3 to search for a book")
+        print("Enter 4 to display all books in the library")
+        print("Enter 0 to exit")
+
+        choice = input("Please enter your choice: ")
+
+        if choice == '1':
+            title = input("Enter the title of the book: ")
+            author = input("Enter the author of the book: ")
+            isbn = input("Enter the ISBN of the book: ")
+            book = Book(title, author, isbn)
+            library.add_book(book)
+
+        elif choice == '2':
+            title = input("Enter the title of the book to remove: ")
+            book_to_remove = library.search_book(title)
+            if book_to_remove:
+                library.remove_book(book_to_remove)
+            else:
+                print(f"The book '{title}' is not in the library.")
+
+        elif choice == '3':
+            title = input("Enter the title of the book to search for: ")
+            book = library.search_book(title)
+            if book:
+                print(f"'{book.title}' by {book.author} (ISBN: {book.isbn}) is in the library.")
+            else:
+                print(f"The book '{title}' is not in the library.")
+
+        elif choice == '4':
+            library.display_books()
+
+        elif choice == '0':
+            print("Exiting the program...")
+            break
+
+        else:
+            print("Invalid choice, please try again.")
